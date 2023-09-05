@@ -1,16 +1,19 @@
-import { drizzle } from "drizzle-orm/planetscale-serverless";
+import * as schema from './schema'
+import { drizzle } from "drizzle-orm/mysql2";
 import { connect } from "@planetscale/database";
+import mysql from "mysql2/promise";
 import 'dotenv/config';
-// if (!process.env.DATABASE_URL) {
-//   throw new Error("env var DB URL is missing")
-// }else {
-//   console.log(" ada cuy");
+
+
+const DbUrl = process.env.DATABASE_URL
+if (!DbUrl) {
   
-// }
+  throw new Error("env var DB URL is missing")
+}
 // create the connection
 // url: process.env.DATABASE_URL
-const connection = connect({
-  url: 'mysql://4tcm0wqlfxk28h8fo925:pscale_pw_I6oC2jTQiA6DoTwdv8Zp1oauKILPnVgYhxJJu4CnU7k@aws.connect.psdb.cloud/discord-clone?ssl={"rejectUnauthorized":true}'
+const connection = await mysql.createConnection({
+  uri: DbUrl
 });
  
-export const db = drizzle(connection);
+export const db = drizzle(connection,{ schema, mode: "planetscale"});

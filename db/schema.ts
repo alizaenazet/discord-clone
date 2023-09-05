@@ -46,13 +46,13 @@ export const Member = mysqlTable('member',{
 
     role: mysqlEnum('role',['ADMIN','MODERATOR','GUEST']).default('GUEST'),
     profileId: varchar('profile_id',{length:36}),
-    sertverId: varchar('server_id',{length:36}),
+    serverId: varchar('server_id',{length:36}),
     createdAt: datetime('created_at').default(sql`CURRENT_TIMESTAMP()`).notNull(),
     updatedAt: datetime('updated_at').default(sql`CURRENT_TIMESTAMP()`).notNull()
 }, (table) => {
     return{
         profileIdIdx: index("profileId_idx").on(table.profileId),
-        serverIdIdx: index("serverId_idx").on(table.sertverId)
+        serverIdIdx: index("serverId_idx").on(table.serverId)
     }
 })
 
@@ -62,8 +62,8 @@ export const Member = mysqlTable('member',{
             references: [Profile.id]
         }),
         server: one(Server,{
-            fields: [Member.sertverId],
-            references: [Server.id]
+            fields: [Member.serverId],
+            references: [Server.id],
         })
     }) ) 
 
