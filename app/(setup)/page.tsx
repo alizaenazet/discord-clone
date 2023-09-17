@@ -1,3 +1,4 @@
+import InitialModal from '@/components/modals/initial-modal';
 import { db } from '@/db/db';
 import { Member, Server } from '@/db/schema';
 import { initalProfile } from '@/lib/initial-profile'
@@ -9,15 +10,8 @@ import React from 'react'
 async function SetupPage() {
     const profile = await initalProfile();
 
-    if (!profile) {
-        console.log("Profile ga ada");
-        
-    }
-
-    console.log('profile');
-    console.log(profile);
     
-
+    // Select server from the user 
     const server = await db.query.Server.findFirst({
         with: {
             members:{
@@ -35,9 +29,7 @@ async function SetupPage() {
 
 
      
-  return (
-  <div>Create server</div>
-  )
+  return <InitialModal />
 }
 
 export default SetupPage
