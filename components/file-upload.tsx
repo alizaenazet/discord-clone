@@ -18,8 +18,8 @@ function FileUpload({
     onChange}: fileUploadProps) {
     const [isLoadingUpload,setIsLoadingUpload] = useState(false)
   return (
-    <Card>
-        <CardContent className='p-2 flex justify-center content-center '>
+    <Card className='dark: bg-white text-white'>
+        <CardContent className='p-2 flex justify-center content-center dark:bg-transparent'>
         {value.length > 1 ? 
             <div className='relative rounded-full w-3/12 h-1/4 '>
                 <img className='object-scale-down rounded-full'
@@ -34,7 +34,7 @@ function FileUpload({
                 type='button'>
                     x</button>
             </div> : isLoadingUpload ? <p>uploading..</p> :
-        <Input id="picture" type="file"  className={`p-20 text-black`} 
+        <Input id="picture" type="file"  className={`p-20 text-black dark: bg-white`} 
             onChange={async (e) => {
                 if (!e.target.files) {return null};
                 const file = e.target.files?.[0]
@@ -44,8 +44,6 @@ function FileUpload({
                 if (status === 200) {
                     onChange(data.data.imageUrl)
                 }
-
-                
             }}/>
         }  
         </CardContent>

@@ -1,6 +1,5 @@
 import { currentProfile } from '@/lib/current-profile';
 import { NextResponse } from 'next/server'
-import crypto from "crypto";
 import { nanoid } from 'nanoid'
 import { db } from '@/lib/db';
 
