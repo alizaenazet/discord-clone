@@ -17,6 +17,19 @@ test("redirect to login-page",async ({page}) => {
 
 test("login-page",async ({page}) => {
     await page.goto('/sign-in')
-
     await expect(page).toHaveURL("/sign-in")
 })
+
+
+test("login-with-google",async ({page}) => {
+    await page.goto('/sign-in')
+    
+    await page.getByAltText("Sign in with Google").click();
+     page.fill('input[type="email"]',"azaenalabidin@student.ciputra.ac.id")
+    await page.getByText("Next").click()
+     page.fill('#password >> input[type="password"]',"2005-03-11")
+    await page.getByText("Next").click()
+    await expect(page).toHaveURL('/')
+})
+
+

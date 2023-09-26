@@ -1,8 +1,6 @@
 import InitialModal from '@/components/modals/initial-modal';
-import { db } from '@/db/db';
-import { Member, Server } from '@/db/schema';
+import { db } from '@/lib/db';
 import { initalProfile } from '@/lib/initial-profile'
-import { eq } from 'drizzle-orm';
 import { redirect } from 'next/navigation';
 import React from 'react'
 
@@ -12,10 +10,13 @@ async function SetupPage() {
 
     
     // Select server from the user 
-    const server = await db.query.Server.findFirst({
-        with: {
+
+    const server = await db.server.findFirst({
+        where: {
             members:{
-                where: (members, {eq}) => eq(members.profileId,profile.id),
+                some:{
+                    profileId: profile.id
+                }
             }
         }
     })

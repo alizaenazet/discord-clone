@@ -1,8 +1,9 @@
 import { apiResponse } from '@/lib/utils'
+
+import { auth } from "@clerk/nextjs";
 import { PutObjectCommand } from '@aws-sdk/client-s3'
 import { s3Client } from '@/lib/s3bucket'
-import path from 'path'
-import { auth } from "@clerk/nextjs";
+
 
 
  

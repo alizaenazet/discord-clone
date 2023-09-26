@@ -2,7 +2,7 @@
 import React, { useState } from 'react'
 import { Input } from "@/components/ui/input"
 import { Card, CardContent, CardFooter } from '@/components/ui/card'
-import { uploadImage } from '@/lib/s3bucket'
+import { deleteImage, uploadImage } from '@/lib/s3bucket'
 
 interface fileUploadProps {
     format: string[],
@@ -21,9 +21,18 @@ function FileUpload({
     <Card>
         <CardContent className='p-2 flex justify-center content-center '>
         {value.length > 1 ? 
-            <div className='rounded-full w-3/12 h-1/4 '>
+            <div className='relative rounded-full w-3/12 h-1/4 '>
                 <img className='object-scale-down rounded-full'
                 src={value} alt={''} />    
+                <button className='bg-rose-500 text-white  px-2 
+                rounded-full absolute top-0 right-0 shadow-sm'
+                onClick={() => {
+                    deleteImage(value)
+                    onChange("")
+
+                }}
+                type='button'>
+                    x</button>
             </div> : isLoadingUpload ? <p>uploading..</p> :
         <Input id="picture" type="file"  className={`p-20 text-black`} 
             onChange={async (e) => {
@@ -32,7 +41,6 @@ function FileUpload({
                 const res = await uploadImage({
                     format,maxSize, file,setIsLoadingUpload})        
                     const {data, status} =  res
-
                 if (status === 200) {
                     onChange(data.data.imageUrl)
                 }

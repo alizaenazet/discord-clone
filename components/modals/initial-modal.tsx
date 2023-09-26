@@ -29,6 +29,9 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { useEffect, useState } from 'react';
 import FileUpload from '../file-upload';
+import axios from 'axios';
+import { useRouter } from 'next/navigation';
+
 
    /* form schema using zod object :
     - Zod object can make easy to declare and understand about the schema.
@@ -47,7 +50,7 @@ import FileUpload from '../file-upload';
         
 
 function InitialModal() {
-
+        const router = useRouter()
  
        /* Solve Hydration failed error :
      - render the modal in the window make a hydration error, cause different markup between server and client
@@ -81,10 +84,17 @@ function InitialModal() {
     
     // custome onSubmit function for the submited useForm values
     const onSubmit = async (values: z.infer<typeof formSchema>) => {
-        console.log('JSON.stringify(values)');
-        console.log(JSON.stringify(values));
-        console.log(values.imageUrl);
-        console.log(values.name);
+
+        console.log(values.toString());
+        try {
+            await axios.post('/api/servers',values)
+            form.reset()
+            router.refresh()
+            window.location.reload()
+        } catch (error) {
+            console.log(error);
+        }
+
     }
 
     if (!isMounted) {
