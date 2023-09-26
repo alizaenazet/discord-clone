@@ -1,5 +1,5 @@
 
-import NavigationSidebar from '@/components/navigation/navigation-sideBar'
+import NavigationSidebar from '@/components/navigation/navigation-sidebar'
 import React from 'react'
 
 function MainLayout({
