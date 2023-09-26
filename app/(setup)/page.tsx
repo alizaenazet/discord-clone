@@ -1,7 +1,6 @@
-import { db } from '@/db/db';
-import { Member, Server } from '@/db/schema';
+import InitialModal from '@/components/modals/initial-modal';
+import { db } from '@/lib/db';
 import { initalProfile } from '@/lib/initial-profile'
-import { eq } from 'drizzle-orm';
 import { redirect } from 'next/navigation';
 import React from 'react'
 
@@ -9,19 +8,14 @@ import React from 'react'
 async function SetupPage() {
     const profile = await initalProfile();
 
-    if (!profile) {
-        console.log("Profile ga ada");
-        
-    }
-
-    console.log('profile');
-    console.log(profile);
     
-
-    const server = await db.query.Server.findFirst({
-        with: {
+    // Select server from the user 
+    const server = await db.server.findFirst({
+        where: {
             members:{
-                where: (members, {eq}) => eq(members.profileId,profile.id),
+                some:{
+                    profileId: profile.id
+                }
             }
         }
     })
@@ -35,9 +29,7 @@ async function SetupPage() {
 
 
      
-  return (
-  <div>Create server</div>
-  )
+  return <InitialModal />
 }
 
 export default SetupPage

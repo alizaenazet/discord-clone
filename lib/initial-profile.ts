@@ -1,8 +1,6 @@
-import { db } from "@/db/db";
-import { Profile } from "@/db/schema";
 import { currentUser, redirectToSignIn } from "@clerk/nextjs";
-import { eq } from "drizzle-orm";
-import { randomUUID } from "crypto";
+import { db } from "./db";
+
 
 
 export const initalProfile = async () => {
@@ -15,26 +13,27 @@ export const initalProfile = async () => {
     }
     const {id,firstName,lastName,imageUrl,emailAddresses} = user
     
-    const profile = await db.select().from(Profile).where(eq(Profile.userId,id))
+    // check the profile 
+    const profile = await db.profile.findUnique({
+        where:{
+            userId: id
+        }
+    })
 
-    console.log('profile init');
-    console.log(profile);
-    
-    if (profile.length) {
+    // is exist return the profile
+    if (profile) {
         return profile
     }
     
-
-    console.log("Init profile and create");
-    
-    const newProfile ={
-    id: randomUUID(),
-    userId: id,
-    name: `${firstName} ${lastName}`,
-    imageUrl: imageUrl,
-    email: emailAddresses[0].emailAddress
-}
-    await db.insert(Profile).values(newProfile)
+    // is not exist create the profile into database
+    const newProfile = await db.profile.create({
+        data: {
+            userId: id,
+            name: `${firstName} ${lastName}`,
+            imageUrl: imageUrl,
+            email: emailAddresses[0].emailAddress,
+        },
+    });
 
      
     return newProfile;
