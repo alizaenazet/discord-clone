@@ -84,6 +84,7 @@ function InitialModal() {
     
     // custome onSubmit function for the submited useForm values
     const onSubmit = async (values: z.infer<typeof formSchema>) => {
+
         console.log(values.toString());
         try {
             await axios.post('/api/servers',values)

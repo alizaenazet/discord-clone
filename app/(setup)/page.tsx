@@ -10,6 +10,7 @@ async function SetupPage() {
 
     
     // Select server from the user 
+
     const server = await db.server.findFirst({
         where: {
             members:{
