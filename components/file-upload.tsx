@@ -18,7 +18,7 @@ function FileUpload({
     onChange}: fileUploadProps) {
     const [isLoadingUpload,setIsLoadingUpload] = useState(false)
   return (
-    <Card>
+    <Card className='dark:bg-white'>
         <CardContent className='p-2 flex justify-center content-center '>
         {value.length > 1 ? 
             <div className='relative rounded-full w-3/12 h-1/4 '>
@@ -35,7 +35,7 @@ function FileUpload({
                     x</button>
             </div> : isLoadingUpload ? <p>uploading..</p> :
             
-        <Input id="picture" type="file"  className={`p-20 text-black`} 
+        <Input id="picture" type="file"  className={`p-20 text-black dark:bg-white`} 
             onChange={async (e) => {
                 if (!e.target.files) {return null};
                 const file = e.target.files?.[0]
