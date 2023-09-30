@@ -1,9 +1,12 @@
+"use client"
 import React from 'react'
 import { Plus } from "lucide-react";
 import ActionTooltip from '@/components/action-tooltip';
+import { useModal } from '@/hooks/use-modal-store';
 
 
 function NavigationAction() {
+  const {onOpen} = useModal()
   return (
     <div>
         <ActionTooltip 
@@ -11,7 +14,8 @@ function NavigationAction() {
         side='right'
         align="center"
         >
-        <button className='group'>
+        <button className='group'
+        onClick={() => onOpen("createServer")}>
           <div className=' border-orange-900 flex mx-3 h-[48px]
             w-[48px] group-hover:rounded-[16px]
             rounded-[24px] transition-all overflow-hidden 
