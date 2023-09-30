@@ -34,6 +34,7 @@ function FileUpload({
                 type='button'>
                     x</button>
             </div> : isLoadingUpload ? <p>uploading..</p> :
+            
         <Input id="picture" type="file"  className={`p-20 text-black`} 
             onChange={async (e) => {
                 if (!e.target.files) {return null};
